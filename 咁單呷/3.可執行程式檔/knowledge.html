@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>咁單呷</title>
+    <!-- JQuery 連結 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <!-- JQuery UI 連結 -->
+    <script src="function.js"></script>
+
+    <meta charset="UTF-8" />
+
+    <link
+      rel="shortcut icon"
+      href="https://www1.pu.edu.tw/~s1091829/logo"
+      type="image/x-icon"
+    />
+    <!-- href="https://cdn-icons-png.flaticon.com/512/4443/4443003.png" -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"
+    />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+    <script src="http://code.jquery.com/jquery-2.1.4.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <link rel="stylesheet" href="style.css" />
+
+    <!--(11/28)美化彈跳視窗-->
+    <script src="sweetalert2.min.js"></script>
+    <!--(11/28)美化彈跳視窗-->
+    <!--(11/28)美化彈跳視窗-->
+    <link rel="stylesheet" href="sweetalert2.min.css" />
+    <!--(11/28)美化彈跳視窗-->
+  </head>
+
+  <body bgcolor="#AAB8AB">
+    <!-- 背景顏色 --><!-- 82ABA3 95A098 AAB8AB 93A3A0-->
+    <!--(11/28)美化彈跳視窗-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script>
+    <!--(11/28)美化彈跳視窗-->
+
+    <!-- Sidebar (hidden by default) -->
+    <nav
+      class="w3-sidebar w3-right w3-bar-block w3-card w3-top w3-xlarge w3-animate-right"
+      style="display: none; z-index: 2; width: 20%; min-width: 300px; right: 0"
+      id="mySidebar"
+    >
+      <!-- (12/03)用戶訊息 -->
+      <a class="w3-bar-item w3-button" id="login-button">登入</a>
+      <span id="user-info" style="display: none">
+        <!--<hr color="black">-->
+        <a id="user-show" style="display: none; list-style: none"></a>
+        <a class="w3-bar-item w3-right"
+          ><img
+            id="user-photo"
+            style="width: 40px; height: 40px; border-radius: 50%" /><b
+            id="user-name"
+          ></b
+        ></a>
+        <a class="w3-bar-item w3-button w3-right" href="personal.html"
+          >個人收藏</a
+        >
+        <a class="w3-bar-item w3-button w3-right" id="logout-button">登出</a>
+      </span>
+      <!-- (12/03)用戶訊息 -->
+      <a
+        href="javascript:void(0)"
+        onclick="w3_close()"
+        class="w3-bar-item w3-button w3-right"
+        >關閉</a
+      >
+      <a href="index.html" class="w3-bar-item w3-button w3-right">首頁</a>
+    </nav>
+
+    <!-- (11/15)透明的背景 -->
+    <!-- Add the overlay div -->
+    <div id="overlay" onclick="w3_close()"></div>
+    <!-- (11/15)透明的背景 -->
+
+    <!-- Top menu -->
+    <div class="w3-top w3-white w3-xlarge" style="margin: auto">
+      <div class="w3-padding-16 w3-left">
+        <a href="index.html"
+          ><img
+            src="https://www1.pu.edu.tw/~s1091829/logo1"
+            width="160px"
+            height="40px"
+        /></a>
+      </div>
+
+      <div class="w3-button w3-padding-16 w3-right" onclick="w3_open()">☰</div>
+    </div>
+
+    <!-- Knowledge -->
+    <hr id="Knowledge" />
+    <div class="w3-container w3-padding-32 w3-center">
+      <h2>小知識</h2>
+      <div class="group">
+        <button id="toggleButton1" class="knowledge-button">食材</button>
+        <button id="toggleButton2" class="knowledge-button">料理</button>
+        <button id="toggleButton3" class="knowledge-button">水果</button>
+        <button id="toggleButton4" class="knowledge-button">其他</button>
+        <!-- (11/20)回到頂部按鈕 -->
+        <button id="backToTopBtn" onclick="backToTop()">^</button>
+        <!-- (11/20)回到頂部按鈕 -->
+
+        <!--食材-->
+        <div id="knowledgeTableContainer1">
+          <table id="knowledgeTable1" border="1">
+            <thead>
+              <tr>
+                <th>編號</th>
+                <th>圖片</th>
+                <th>內容</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <!--料理-->
+        <div id="knowledgeTableContainer2">
+          <table id="knowledgeTable2" border="1">
+            <thead>
+              <tr>
+                <th>編號</th>
+                <th>圖片</th>
+                <th>內容</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <!-- 水果 -->
+        <div id="knowledgeTableContainer3">
+          <table id="knowledgeTable3" border="1">
+            <thead>
+              <tr>
+                <th>編號</th>
+                <th>圖片</th>
+                <th>內容</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <!-- 其他 -->
+        <div id="knowledgeTableContainer4">
+          <table id="knowledgeTable4" border="1">
+            <thead>
+              <tr>
+                <th>編號</th>
+                <th>圖片</th>
+                <th>內容</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
+      import {
+        getFirestore,
+        collection,
+        getDocs,
+        query,
+        where,
+        addDoc,
+        doc,
+        orderBy,
+      } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js";
+      /*(11/15)*/
+      import {
+        getAuth,
+        GoogleAuthProvider,
+        signInWithPopup,
+        getRedirectResult,
+        signOut,
+      } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-auth.js";
+      /*(11/15)*/
+
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyCkYXHGj37nHrMglwUHKWN2vOE0ty3o8T4",
+        authDomain: "fir-test-dc8dc.firebaseapp.com",
+        projectId: "fir-test-dc8dc",
+        storageBucket: "fir-test-dc8dc.appspot.com",
+        messagingSenderId: "851272507964",
+        appId: "1:851272507964:web:493d6b2ce3d5e239029939",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+
+      //用于更新HTML元素文本内容
+      function updateEditableText(id, text) {
+        const editableText = document.getElementById(id);
+        editableText.textContent = text;
+      }
+
+      window.onload = function () {
+        // 將所有表格的初始可見性設為 "none"
+        document.getElementById("knowledgeTableContainer1").style.display =
+          "none";
+        document.getElementById("knowledgeTableContainer2").style.display =
+          "none";
+        document.getElementById("knowledgeTableContainer3").style.display =
+          "none";
+        document.getElementById("knowledgeTableContainer4").style.display =
+          "none";
+
+        // 先顯示你想要顯示的表格（這是表格1的示例）
+        document.getElementById("knowledgeTableContainer1").style.display =
+          "block";
+        // 将"食材"按钮设置为具有"active"类
+        document.getElementById("toggleButton1").classList.add("active");
+      };
+
+      // 获取按钮元素
+      const buttons = document.querySelectorAll(".knowledge-button");
+
+      // 为每个按钮添加点击事件监听器
+      buttons.forEach((button) => {
+        button.addEventListener("click", function () {
+          // 移除所有按钮上的 .active 类
+          buttons.forEach((btn) => {
+            btn.classList.remove("active");
+          });
+
+          // 添加 .active 类到当前点击的按钮
+          button.classList.add("active");
+        });
+      });
+
+      //食材
+      function clearTableData1() {
+        const tableElement1 = document.getElementById("knowledgeTable1");
+        const tbodyElement1 = tableElement1.getElementsByTagName("tbody")[0];
+        if (tbodyElement1) {
+          tbodyElement1.innerHTML = "";
+        } else {
+          // 如果tbody不存在，创建一个新的tbody元素并添加到表格中
+          const newTBody1 = document.createElement1("tbody");
+          tableElement1.appendChild(newTBody1);
+        }
+      }
+
+      //料理
+      function clearTableData2() {
+        const tableElement2 = document.getElementById("knowledgeTable2");
+        const tbodyElement2 = tableElement2.getElementsByTagName("tbody")[0];
+        if (tbodyElement2) {
+          tbodyElement2.innerHTML = "";
+        } else {
+          // 如果tbody不存在，创建一个新的tbody元素并添加到表格中
+          const newTBody2 = document.createElement2("tbody");
+          tableElement2.appendChild(newTBody2);
+        }
+      }
+
+      //水果
+      function clearTableData3() {
+        const tableElement3 = document.getElementById("knowledgeTable3");
+        const tbodyElement3 = tableElement3.getElementsByTagName("tbody")[0];
+        if (tbodyElement3) {
+          tbodyElement3.innerHTML = "";
+        } else {
+          // 如果tbody不存在，创建一个新的tbody元素并添加到表格中
+          const newTBody3 = document.createElement3("tbody");
+          tableElement3.appendChild(newTBody3);
+        }
+      }
+
+      //其他
+      function clearTableData4() {
+        const tableElement4 = document.getElementById("knowledgeTable4");
+        const tbodyElement4 = tableElement4.getElementsByTagName("tbody")[0];
+        if (tbodyElement4) {
+          tbodyElement4.innerHTML = "";
+        } else {
+          // 如果tbody不存在，创建一个新的tbody元素并添加到表格中
+          const newTBody4 = document.createElement4("tbody");
+          tableElement4.appendChild(newTBody4);
+        }
+      }
+
+      //食材
+      async function fetchExampleCollection1(內容 = null) {
+        try {
+          const exampleCol1 = collection(db, "knowledgefood");
+          let exampleQuery1;
+
+          // 使用orderBy方法按照編號字段升序排序
+          exampleQuery1 = query(exampleCol1, orderBy("編號"));
+
+          const exampleSnapshot1 = await getDocs(exampleQuery1);
+          const tableElement1 = document.getElementById("knowledgeTable1");
+
+          if (exampleSnapshot1.empty) {
+            clearTableData1();
+          } else {
+            // Clear the table first
+            clearTableData1();
+            exampleSnapshot1.forEach((doc) => {
+              const rowElement1 = document.createElement("tr");
+              const numCellElement1 = document.createElement("td"); //顯示編號
+              const imgCellElement1 = document.createElement("td"); //顯示圖片
+              const contentCellElement1 = document.createElement("td"); //顯示內容
+
+              const data = doc.data();
+              numCellElement1.textContent = data.編號;
+              contentCellElement1.textContent = data.內容;
+
+              const imgElement1 = document.createElement("img"); //顯示照片
+              imgElement1.src = data.圖片;
+              imgCellElement1.appendChild(imgElement1); // 添加圖像元素到表格單元格
+
+              rowElement1.appendChild(numCellElement1);
+              rowElement1.appendChild(imgCellElement1); // 添加圖像元素到表格單元格
+              rowElement1.appendChild(contentCellElement1);
+
+              tableElement1.querySelector("tbody").appendChild(rowElement1);
+            });
+            tableElement1.style.display = "block"; // 显示表格
+          }
+        } catch (error) {
+          console.error("Error fetching collection:", error);
+        }
+      }
+
+      // 添加点击事件监听器
+      toggleButton1.addEventListener("click", function () {
+        // 切换knowledgeTable的可见性
+        if (knowledgeTableContainer1.style.display === "none") {
+          knowledgeTableContainer1.style.display = "block";
+          knowledgeTableContainer2.style.display = "none"; // 隐藏其他表格
+          knowledgeTableContainer3.style.display = "none"; // 隐藏其他表格
+          knowledgeTableContainer4.style.display = "none"; // 隐藏其他表格
+        } else {
+          knowledgeTableContainer1.style.display = "none";
+        }
+      });
+      fetchExampleCollection1();
+
+      //料理
+      async function fetchExampleCollection2(內容 = null) {
+        try {
+          const exampleCol2 = collection(db, "knowledgecook");
+          let exampleQuery2;
+
+          // 使用orderBy方法按照編號字段升序排序
+          exampleQuery2 = query(exampleCol2, orderBy("編號"));
+
+          const exampleSnapshot2 = await getDocs(exampleQuery2);
+          const tableElement2 = document.getElementById("knowledgeTable2");
+
+          if (exampleSnapshot2.empty) {
+            clearTableData2();
+          } else {
+            // Clear the table first
+            clearTableData2();
+            exampleSnapshot2.forEach((doc) => {
+              const rowElement2 = document.createElement("tr");
+              const numCellElement2 = document.createElement("td"); //顯示編號
+              const imgCellElement2 = document.createElement("td"); //顯示圖片
+              const contentCellElement2 = document.createElement("td"); //顯示內容
+
+              const data = doc.data();
+              numCellElement2.textContent = data.編號;
+              contentCellElement2.textContent = data.內容;
+
+              const imgElement2 = document.createElement("img"); //顯示照片
+              imgElement2.src = data.圖片;
+              imgCellElement2.appendChild(imgElement2); // 添加圖像元素到表格單元格
+
+              rowElement2.appendChild(numCellElement2);
+              rowElement2.appendChild(imgCellElement2); // 添加圖像元素到表格單元格
+              rowElement2.appendChild(contentCellElement2);
+
+              tableElement2.querySelector("tbody").appendChild(rowElement2);
+            });
+            tableElement2.style.display = "block"; // 显示表格
+          }
+        } catch (error) {
+          console.error("Error fetching collection:", error);
+        }
+      }
+
+      toggleButton2.addEventListener("click", function () {
+        // 切换knowledgeTable的可见性
+        if (knowledgeTableContainer2.style.display === "none") {
+          knowledgeTableContainer2.style.display = "block";
+          knowledgeTableContainer1.style.display = "none"; // 隐藏其他表格
+          knowledgeTableContainer3.style.display = "none"; // 隐藏其他表格
+          knowledgeTableContainer4.style.display = "none"; // 隐藏其他表格
+        } else {
+          knowledgeTableContainer2.style.display = "none";
+        }
+      });
+      fetchExampleCollection2();
+
+      //水果
+      async function fetchExampleCollection3(內容 = null) {
+        try {
+          const exampleCol3 = collection(db, "knowledgefruit");
+          let exampleQuery3;
+
+          // 使用orderBy方法按照編號字段升序排序
+          exampleQuery3 = query(exampleCol3, orderBy("編號"));
+
+          const exampleSnapshot3 = await getDocs(exampleQuery3);
+          const tableElement3 = document.getElementById("knowledgeTable3");
+
+          if (exampleSnapshot3.empty) {
+            clearTableData3();
+          } else {
+            // Clear the table first
+            clearTableData3();
+            exampleSnapshot3.forEach((doc) => {
+              const rowElement3 = document.createElement("tr");
+              const numCellElement3 = document.createElement("td"); //顯示編號
+              const imgCellElement3 = document.createElement("td"); //顯示圖片
+              const contentCellElement3 = document.createElement("td"); //顯示內容
+
+              const data = doc.data();
+              numCellElement3.textContent = data.編號;
+              contentCellElement3.textContent = data.內容;
+
+              const imgElement3 = document.createElement("img"); //顯示照片
+              imgElement3.src = data.圖片;
+              imgCellElement3.appendChild(imgElement3); // 添加圖像元素到表格單元格
+
+              rowElement3.appendChild(numCellElement3);
+              rowElement3.appendChild(imgCellElement3); // 添加圖像元素到表格單元格
+              rowElement3.appendChild(contentCellElement3);
+
+              tableElement3.querySelector("tbody").appendChild(rowElement3);
+            });
+            tableElement3.style.display = "block"; // 显示表格
+          }
+        } catch (error) {
+          console.error("Error fetching collection:", error);
+        }
+      }
+
+      toggleButton3.addEventListener("click", function () {
+        // 切换knowledgeTable的可见性
+        if (knowledgeTableContainer3.style.display === "none") {
+          knowledgeTableContainer3.style.display = "block";
+          knowledgeTableContainer1.style.display = "none"; // 隐藏其他表格
+          knowledgeTableContainer2.style.display = "none"; // 隐藏其他表格
+          knowledgeTableContainer4.style.display = "none"; // 隐藏其他表格
+        } else {
+          knowledgeTableContainer3.style.display = "none";
+        }
+      });
+      fetchExampleCollection3();
+
+      //其他
+      async function fetchExampleCollection4(內容 = null) {
+        try {
+          const exampleCol4 = collection(db, "knowledgeother");
+          let exampleQuery4;
+
+          // 使用orderBy方法按照編號字段升序排序
+          exampleQuery4 = query(exampleCol4, orderBy("編號"));
+
+          const exampleSnapshot4 = await getDocs(exampleQuery4);
+          const tableElement4 = document.getElementById("knowledgeTable4");
+
+          if (exampleSnapshot4.empty) {
+            clearTableData4();
+          } else {
+            // Clear the table first
+            clearTableData4();
+            exampleSnapshot4.forEach((doc) => {
+              const rowElement4 = document.createElement("tr");
+              const numCellElement4 = document.createElement("td"); //顯示編號
+              const imgCellElement4 = document.createElement("td"); //顯示圖片
+              const contentCellElement4 = document.createElement("td"); //顯示內容
+
+              const data = doc.data();
+              numCellElement4.textContent = data.編號;
+              contentCellElement4.textContent = data.內容;
+
+              const imgElement4 = document.createElement("img"); //顯示照片
+              imgElement4.src = data.圖片;
+              imgCellElement4.appendChild(imgElement4); // 添加圖像元素到表格單元格
+
+              rowElement4.appendChild(numCellElement4);
+              rowElement4.appendChild(imgCellElement4); // 添加圖像元素到表格單元格
+              rowElement4.appendChild(contentCellElement4);
+
+              tableElement4.querySelector("tbody").appendChild(rowElement4);
+            });
+            tableElement4.style.display = "block"; // 显示表格
+          }
+        } catch (error) {
+          console.error("Error fetching collection:", error);
+        }
+      }
+
+      toggleButton4.addEventListener("click", function () {
+        // 切换knowledgeTable的可见性
+        if (knowledgeTableContainer4.style.display === "none") {
+          knowledgeTableContainer4.style.display = "block";
+          knowledgeTableContainer1.style.display = "none"; // 隐藏其他表格
+          knowledgeTableContainer2.style.display = "none"; // 隐藏其他表格
+          knowledgeTableContainer3.style.display = "none"; // 隐藏其他表格
+        } else {
+          knowledgeTableContainer4.style.display = "none";
+        }
+      });
+      fetchExampleCollection4();
+
+      /*(11/15)登入.使用者資訊.登出*/
+      const auth = getAuth(app);
+      const provider = new GoogleAuthProvider(app);
+      const loginButton = document.getElementById("login-button");
+      const userInfo = document.getElementById("user-info");
+      const logoutButton = document.getElementById("logout-button");
+
+      loginButton.addEventListener("click", () => {
+        // Use signInWithPopup instead of signInWithRedirect
+        signInWithPopup(auth, provider)
+          .then((result) => {
+            const user = result.user;
+            // Update the page with user information
+            loginButton.style.display = "none";
+            userInfo.style.display = "block";
+            document.getElementById("user-name").textContent = user.displayName;
+            document.getElementById("user-photo").src = user.photoURL;
+
+            Swal.fire({
+              imageUrl: "login.signup.jpg",
+              imageWidth: 225,
+              imageHeight: 120,
+              imageAlt: "咁單呷",
+              icon: "success",
+              text: "登入成功！",
+            });
+          })
+          .catch((error) => {
+            console.error("Sign in error:", error);
+          });
+      });
+
+      // Google Sign-Out
+      logoutButton.addEventListener("click", () => {
+        signOut(auth)
+          .then(() => {
+            Swal.fire({
+              //(11/28)
+              imageUrl: "login.signup.jpg",
+              imageWidth: 225,
+              imageHeight: 120,
+              imageAlt: "咁單呷",
+              icon: "success",
+              text: "登出成功！",
+            });
+
+            // Sign-out successful, update UI
+            loginButton.style.display = "block";
+            userInfo.style.display = "none";
+            document.getElementById("user-name").textContent = "";
+            document.getElementById("user-photo").src = "";
+          })
+          .catch((error) => {
+            console.error("Sign out error:", error);
+          });
+      });
+
+      // On auth state change
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          // User is signed in
+
+          loginButton.style.display = "none";
+          userInfo.style.display = "block";
+          document.getElementById("user-name").textContent = user.displayName;
+          document.getElementById("user-photo").src = user.photoURL;
+        } else {
+          // User is signed out
+          loginButton.style.display = "block";
+          userInfo.style.display = "none";
+        }
+      });
+      /*(11/15)登入.使用者資訊.登出*/
+    </script>
+  </body>
+</html>

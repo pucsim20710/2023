@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>咁單呷</title>
+    <!-- JQuery 連結 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <!-- JQuery UI 連結 -->
+    <!--<script src="jquery-ui.js"></script>-->
+    <script src="function.js"></script>
+
+    <meta charset="UTF-8" />
+
+    <link
+      rel="shortcut icon"
+      href="https://www1.pu.edu.tw/~s1091829/logo"
+      type="image/x-icon"
+    />
+    <!-- href="https://cdn-icons-png.flaticon.com/512/4443/4443003.png" -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"
+    />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+    <script src="http://code.jquery.com/jquery-2.1.4.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <link rel="stylesheet" href="style.css" />
+
+    <!--(11/28)美化彈跳視窗--><script src="sweetalert2.min.js"></script><!--(11/28)美化彈跳視窗-->
+    <!--(11/28)美化彈跳視窗--><link rel="stylesheet" href="sweetalert2.min.css"><!--(11/28)美化彈跳視窗-->
+  </head>
+
+    <body bgcolor="#AAB8AB"><!-- 背景顏色 --><!-- 82ABA3 95A098 AAB8AB 93A3A0-->
+    <!--(11/28)美化彈跳視窗--><script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script><!--(11/28)美化彈跳視窗-->
+
+    <!-- Sidebar (hidden by default) -->
+    <nav class="w3-sidebar w3-right w3-bar-block w3-card w3-top w3-xlarge w3-animate-right" style="display:none;z-index:2;width:20%;min-width:300px;right:0;" id="mySidebar">
+      <!-- (12/03)用戶訊息 -->
+      <a class="w3-bar-item w3-button" id="login-button">登入</a>
+        <span id="user-info" style="display: none;">
+          <!--<hr color="black">-->
+          <a id="user-show" style="display: none;list-style: none;"></a>
+          <a class="w3-bar-item w3-right"><img id="user-photo" style="width: 40px; height: 40px; border-radius: 50%"><b id="user-name"></b></a>
+          <a class="w3-bar-item w3-button w3-right" href="personal.html">個人收藏</a>
+          <a class="w3-bar-item w3-button w3-right" id="logout-button">登出</a>
+        </span>
+      <!-- (12/03)用戶訊息 -->
+      <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-right">關閉</a>
+      <a href="index.html" class="w3-bar-item w3-button w3-right">首頁</a>
+    </nav>
+
+    <!-- (11/15)透明的背景 -->
+    <!-- Add the overlay div -->
+    <div id="overlay" onclick="w3_close()"></div>
+    <!-- (11/15)透明的背景 -->
+
+    <!-- Top menu -->
+    <div class="w3-white w3-xlarge" style="margin: auto">
+      <div class="w3-padding-16 w3-left">
+        <a href="index.html"><img src="https://www1.pu.edu.tw/~s1091829/logo1" width="160px" height="40px"></a>
+      </div>      
+      <div class="w3-button w3-padding-16 w3-right" onclick="w3_open()">☰</div>
+
+      <!-- 搜索框 -->
+      <!-- Search Section -->
+      <div class="w3-center w3-padding-16">
+        <!-- 查詢 section -->
+          <form class="SEARCH" style="margin: auto"></form>
+
+          <div class="search-container">
+            <input
+              type="text"
+              id="search-input"
+              style="color: black;border: 2px black solid;"
+              placeholder="輸入食材,以空格或逗號隔開"
+            />
+            <button
+              id="search-button"
+              style="border-radius: 10px;width: 35px;"
+              type="button"
+            >
+              <img
+                src="https://png.pngtree.com/png-vector/20190423/ourmid/pngtree-search-icon-vector-illustration-in-filled-style-for-any-purpose-png-image_975457.jpg"
+                id="searchimg"
+                style="height: 25px;width: 25px;"
+              />
+            </button>
+          </div>
+      </div>
+
+    </div>
+
+      <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
+        import {
+          getFirestore,
+          collection,
+          getDocs,
+          query,
+          where,
+          addDoc,
+          doc,
+          getDoc,
+          updateDoc,
+          setDoc,
+          limit
+        } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js";
+        /*(11/15)*/
+        import {
+          getAuth,
+          GoogleAuthProvider,
+          signInWithPopup, //(12/06)
+          getRedirectResult,
+          signOut,
+        } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-auth.js";
+        /*(11/15)*/
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyCkYXHGj37nHrMglwUHKWN2vOE0ty3o8T4",
+          authDomain: "fir-test-dc8dc.firebaseapp.com",
+          projectId: "fir-test-dc8dc",
+          storageBucket: "fir-test-dc8dc.appspot.com",
+          //messagingSenderId: "851272507964",
+          appId: "1:851272507964:web:493d6b2ce3d5e239029939",
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        /*(11/15)*/
+
+        // 更新搜索结果提示的函数
+        function updateSearchResultsHeading(query) {
+          const headingElement = document.getElementById("t2-log");
+
+          if (query) {
+            headingElement.textContent = `搜尋結果：${query}`;
+          } else {
+            headingElement.textContent = "搜尋結果：";
+          }
+        }
+        /*(11/15)*/
+
+        //用于更新HTML元素文本内容
+        function updateEditableText(id, text) {
+          const editableText = document.getElementById(id);
+          editableText.textContent = text;
+        }
+
+        function clearTableData() {
+          const tableElement = document.getElementById("myTable");
+          const tbodyElement = tableElement.getElementsByTagName("tbody")[0];
+          if (tbodyElement) {
+            tbodyElement.innerHTML = "";
+          } else {
+            // 如果tbody不存在，创建一个新的tbody元素并添加到表格中
+            const newTBody = document.createElement("tbody");
+            tableElement.appendChild(newTBody);
+          }
+        }
+
+        async function fetchExampleCollection(食材關鍵字 = null) {
+        console.log("食材關鍵字:", 食材關鍵字);
+        console.log("userUID:", userId);
+        if (userId) {
+          const userDocRef = doc(db, 'users', userId);
+          const userDocSnapshot = await getDoc(userDocRef);
+          if (userDocSnapshot.exists()) {
+            try {
+              const exampleCol = collection(db, "Recipe");
+              let exampleQuery;
+
+              if (食材關鍵字) {
+                const keywords = 食材關鍵字 ? 食材關鍵字.split(/[ ,]+/) : []; // 以逗號或空格分隔食材關鍵字
+
+                console.log("keywords:", keywords);
+
+                if (keywords) {
+                  // 如果只有食材關鍵字，則只使用食材進行搜尋
+                  exampleQuery = query(
+                    exampleCol,
+                    where("prepare_array", "array-contains-any", keywords)
+                  );
+                }
+              } else {
+                // 如果食材和食譜名稱關鍵字都為空，則查詢全部資料
+                exampleQuery = query(exampleCol);
+              }
+
+              const exampleSnapshot = await getDocs(exampleQuery);
+              const tableElement = document.getElementById("myTable");
+
+              if (exampleSnapshot.empty) {
+                clearTableData();
+              } else {
+                // 如果有搜尋結果，清空表格數據並填充新的數據
+                clearTableData();
+                exampleSnapshot.forEach((doc) => {
+                  const rowElement = document.createElement("tr");
+                  const imgCellElement = document.createElement("td"); //顯示照片
+                  const nameCellElement = document.createElement("td"); //顯示名稱
+                  const prepareCellElement = document.createElement("td"); //顯示準備食材
+                  const pCellElement = document.createElement("td"); //顯示調味料
+
+                  const data = doc.data();
+                  nameCellElement.textContent = data.recipe_name; //(11/22)
+                  prepareCellElement.textContent = data.prepare_array.join(", "); //(11/22)
+                  pCellElement.textContent = data.seasoning_array.join(", "); //(11/22)
+
+                  const keywords = 食材關鍵字 ? 食材關鍵字.split(/[ ,]+/) : [];
+
+                  // 使用正则表达式替换匹配的关键字为带有 highlight 类的 span 标签
+                  const highlightKeywords = (text, keywords) => {
+                    return keywords.reduce((result, keyword) => {
+                      const regex = new RegExp(keyword, "gi");
+                      return result.replace(
+                        regex,
+                        '<span class="highlight">$&</span>'
+                      );
+                    }, text);
+                  };
+
+                  prepareCellElement.innerHTML = highlightKeywords(
+                    data.prepare_array.join(", "),
+                    keywords
+                  );
+
+                  const imgElement = document.createElement("img"); //顯示照片
+                  imgElement.src = data.picture; //(11/21)
+                  imgCellElement.appendChild(imgElement); // 添加圖像元素到表格單元格
+                  rowElement.appendChild(imgCellElement); // 添加圖像元素到表格單元格
+
+                  // 创建按钮元素
+                  const moreCellElement = document.createElement("td"); //顯示單元格
+                  const moreButton = document.createElement("button");
+                  moreButton.textContent = "查看詳情"; // 设置按钮的显示文本
+                  moreButton.className = "more-button";
+                  moreCellElement.appendChild(moreButton); // 将按钮元素添加到单元格
+
+                  moreButton.addEventListener("click", function () {
+                    // 在這裡處理查看詳情按鈕的邏輯，傳遞食譜名稱
+                    viewRecipeDetails(data.recipe_name);
+                  });
+
+                  /*(11/22)创建收藏按钮*/
+                  const loveCellElement = document.createElement("td");
+                  const loveButton = document.createElement("button");
+                  loveButton.className = "love-button";
+
+                  const userData = userDocSnapshot.data();
+                  let myDavorites = userData.favorites
+                  let x = false;
+
+                  if (myDavorites.find((element) => element.recipe_name == doc.data().recipe_name)) {
+                    loveButton.innerHTML = `<img src="${data.collected}" alt="已收藏">`;
+                    x = true;
+                  } else {
+                    loveButton.innerHTML = `<img src="${data.love}" alt="收藏">`;
+                    x = false;
+                  }
+
+                  loveButton.addEventListener("click", function () {
+
+                    if (x) {
+                      // 执行取消收藏的逻辑
+                      removeFromFavorites(data.recipe_name);
+                      x = false;
+                      loveButton.innerHTML = `<img src="${data.love}" alt="收藏">`;
+                    } else {
+                      // 执行收藏的逻辑
+                      addToFavorites(data.recipe_name);
+                      x = true;
+                      loveButton.innerHTML = `<img src="${data.collected}" alt="已收藏">`;
+                    }
+                  });
+
+                  loveCellElement.appendChild(loveButton);
+                  /*(11/22)创建收藏按钮*/
+
+                  rowElement.appendChild(nameCellElement);
+                  rowElement.appendChild(prepareCellElement);
+                  rowElement.appendChild(pCellElement);
+                  rowElement.appendChild(moreCellElement); // 将链接单元格添加到行
+                  rowElement.appendChild(loveCellElement); // (11/22)将收藏按钮添加到行中
+
+                  tableElement.querySelector("tbody").appendChild(rowElement);
+                });
+                tableElement.style.display = "block"; // 显示表格
+              }
+            } catch (error) {
+              console.error("Error fetching collection:", error);
+            }
+          }
+        } else {
+          try {
+            const exampleCol = collection(db, "Recipe");
+            let exampleQuery;
+
+            if (食材關鍵字) {
+              const keywords = 食材關鍵字 ? 食材關鍵字.split(/[ ,]+/) : []; // 以逗號或空格分隔食材關鍵字
+
+              console.log("keywords:", keywords);
+
+              if (keywords) {
+                // 如果只有食材關鍵字，則只使用食材進行搜尋
+                exampleQuery = query(
+                  exampleCol,
+                  where("prepare_array", "array-contains-any", keywords)
+                );
+              }
+            } else {
+              // 如果食材和食譜名稱關鍵字都為空，則查詢全部資料
+              exampleQuery = query(exampleCol);
+            }
+
+            const exampleSnapshot = await getDocs(exampleQuery);
+            const tableElement = document.getElementById("myTable");
+
+            if (exampleSnapshot.empty) {
+              clearTableData();
+            } else {
+              // 如果有搜尋結果，清空表格數據並填充新的數據
+              clearTableData();
+              exampleSnapshot.forEach((doc) => {
+                const rowElement = document.createElement("tr");
+                const imgCellElement = document.createElement("td"); //顯示照片
+                const nameCellElement = document.createElement("td"); //顯示名稱
+                const prepareCellElement = document.createElement("td"); //顯示準備食材
+                const pCellElement = document.createElement("td"); //顯示調味料
+
+                const data = doc.data();
+                nameCellElement.textContent = data.recipe_name; //(11/22)
+                prepareCellElement.textContent = data.prepare_array.join(", "); //(11/22)
+                pCellElement.textContent = data.seasoning_array.join(", "); //(11/22)
+
+                const keywords = 食材關鍵字 ? 食材關鍵字.split(/[ ,]+/) : [];
+
+                // 使用正则表达式替换匹配的关键字为带有 highlight 类的 span 标签
+                const highlightKeywords = (text, keywords) => {
+                  return keywords.reduce((result, keyword) => {
+                    const regex = new RegExp(keyword, "gi");
+                    return result.replace(
+                      regex,
+                      '<span class="highlight">$&</span>'
+                    );
+                  }, text);
+                };
+
+                prepareCellElement.innerHTML = highlightKeywords(
+                  data.prepare_array.join(", "),
+                  keywords
+                );
+
+                const imgElement = document.createElement("img"); //顯示照片
+                imgElement.src = data.picture; //(11/21)
+                imgCellElement.appendChild(imgElement); // 添加圖像元素到表格單元格
+                rowElement.appendChild(imgCellElement); // 添加圖像元素到表格單元格
+
+                // 创建按钮元素
+                const moreCellElement = document.createElement("td"); //顯示單元格
+                const moreButton = document.createElement("button");
+                moreButton.textContent = "查看詳情"; // 设置按钮的显示文本
+                moreButton.className = "more-button";
+                moreCellElement.appendChild(moreButton); // 将按钮元素添加到单元格
+
+                moreButton.addEventListener("click", function () {
+                  // 在這裡處理查看詳情按鈕的邏輯，傳遞食譜名稱
+                  viewRecipeDetails(data.recipe_name);
+                });
+
+                /*(11/22)创建收藏按钮*/
+                const loveCellElement = document.createElement("td");
+                const loveButton = document.createElement("button");
+                loveButton.className = "love-button";
+                loveButton.innerHTML = `<img src="${data.love}" alt="收藏">`;
+
+                loveButton.addEventListener("click", function () {
+                  // 在这里添加处理点击收藏按钮的逻辑
+                  Swal.fire({
+                    imageUrl: "login.signup.jpg",
+                    imageWidth: 225,
+                    imageHeight: 120,
+                    imageAlt: "咁單呷",
+                    icon: "error",
+                    text: "請登入後再進行收藏。",
+                  });
+
+                });
+
+                loveCellElement.appendChild(loveButton);
+                /*(11/22)创建收藏按钮*/
+
+                rowElement.appendChild(nameCellElement);
+                rowElement.appendChild(prepareCellElement);
+                rowElement.appendChild(pCellElement);
+                rowElement.appendChild(moreCellElement); // 将链接单元格添加到行
+                rowElement.appendChild(loveCellElement); // (11/22)将收藏按钮添加到行中
+
+                tableElement.querySelector("tbody").appendChild(rowElement);
+              });
+              tableElement.style.display = "block"; // 显示表格
+            }
+          } catch (error) {
+            console.error("Error fetching collection:", error);
+          }
+        }
+      }
+
+        const searchInput = document.getElementById("search-input");
+        const searchButton = document.getElementById("search-button");
+        const searchResultsContainer = document.getElementById("t2-log");
+
+        // 添加点击事件处理程序，当用户点击搜索按钮时执行搜索
+        searchButton.addEventListener("click", () => {
+          performSearch();
+        });
+
+        // 添加按下 Enter 鍵時的事件監聽器
+        searchInput.addEventListener("keyup", (event) => {
+          if (event.key === "Enter") {
+            performSearch();
+          }
+        });
+
+        const searchText = searchInput.value.trim();
+        // 创建一个新函数来执行搜索并更新搜索结果
+        function performSearch() {
+          const searchText = searchInput.value.trim();//(12/11)
+
+          // 清空搜索结果容器
+          searchResultsContainer.innerHTML = "";
+
+          // 在这里执行搜索操作，根据查询 `query` 获取搜索结果
+          // 这可能涉及到通过Ajax请求发送查询到服务器，获取数据并呈现在页面上
+
+          // 示例：创建一个结果元素并添加到搜索结果容器
+          const resultElement = document.createElement("div");
+          resultElement.textContent = `搜尋结果：${searchText}`;
+          searchResultsContainer.appendChild(resultElement);
+
+          // 执行实际的搜尋功能
+          fetchExampleCollection(searchText);
+        }        
+
+        function highlightKeywords(query) {
+          const highlightElements = document.querySelectorAll(".highlight");
+
+          // 遍历所有标记元素，根据查询参数更新关键字的标记
+          highlightElements.forEach((element) => {
+            const textContent = element.textContent;
+
+            // 根据查询参数匹配文本内容，这里使用正则表达式进行不区分大小写的匹配
+            const regexQuery = new RegExp(query, "gi");
+
+            // 更新标记样式
+            element.innerHTML = textContent.replace(
+              regexQuery,
+              '<span class="highlight">$&</span>'
+            );
+          });
+        }
+
+        /*(11/15)登入.使用者資訊.登出*/
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider(app);
+        const loginButton = document.getElementById("login-button");
+        const userInfo = document.getElementById("user-info");
+        const logoutButton = document.getElementById("logout-button");
+
+        loginButton.addEventListener('click', () => {
+            // Use signInWithPopup instead of signInWithRedirect
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    const user = result.user;
+                    // Update the page with user information
+                    loginButton.style.display = 'none';
+                    userInfo.style.display = 'block';
+                    document.getElementById('user-name').textContent = user.displayName;
+                    document.getElementById('user-photo').src = user.photoURL;
+    
+                    Swal.fire({
+                        imageUrl: "login.signup.jpg",
+                        imageWidth: 225,
+                        imageHeight: 120,
+                        imageAlt: "咁單呷",
+                        icon: "success",
+                        text: "登入成功！",
+                    });
+                })
+                .catch((error) => {
+                    console.error('Sign in error:', error);
+                });
+        });
+
+        // Google Sign-Out
+        logoutButton.addEventListener("click", () => {
+          signOut(auth)
+            .then(() => {
+
+              // Sign-out successful, update UI
+              loginButton.style.display = "block";
+              userInfo.style.display = "none";
+              document.getElementById("user-name").textContent = "";
+              document.getElementById("user-photo").src = "";
+              location.reload();
+            })
+            .catch((error) => {
+              console.error("Sign out error:", error);
+            });
+        });
+
+        // (連接使用者資料庫)On auth state change
+        var userId = null
+        auth.onAuthStateChanged(async (user) => {
+          if (user) {
+            // User is signed in 
+            userId = user.uid;
+            console.log("userUID:", userId);
+            console.log("User is signed in. User UID:", userId);
+            const userUID = user.uid;
+            const userName = user.displayName;
+            const userEmail = user.email;
+
+            const userDocRef = doc(db, "users", userUID);
+
+            // 检查用户文档是否存在
+            const userDocSnapshot = await getDoc(userDocRef);
+            if (!userDocSnapshot.exists()) {
+              // 如果用户文档不存在，则创建一个新文档
+              await setDoc(userDocRef, {
+                uid: userUID,
+                name: user.displayName,
+                Email: user.email,
+              });
+            }
+
+            loginButton.style.display = "none";
+            userInfo.style.display = "block";
+            document.getElementById("user-name").textContent = user.displayName;
+            document.getElementById("user-photo").src = user.photoURL;           
+          } else {
+            console.log("User is signed out.");
+            // User is signed out
+            loginButton.style.display = "block";
+            userInfo.style.display = "none";
+          }
+          const urlParams = new URLSearchParams(window.location.search);
+          const query = urlParams.get("query");
+
+          // 如果查询参数存在，则执行搜索
+          if (query) {
+            fetchExampleCollection(query);
+            const headingElement = document.getElementById("t2-log");
+            headingElement.textContent = `搜尋結果：${query}`;
+          }else{
+            fetchExampleCollection(searchText);
+            const resultElement = document.createElement("div");
+            resultElement.textContent = `搜尋结果：${searchText}`;
+            //searchResultsContainer.appendChild(resultElement);
+          }
+        });
+        /*(11/15)登入.使用者資訊.登出*/
+
+      // 收藏
+        
+      // 添加到收藏夹的函数
+      async function addToFavorites(recipeName) {
+        // 获取用户 UID
+        const user = auth.currentUser;
+
+        if (user) {
+          const userUID = user.uid;
+
+          // 获取用户文档的引用
+          const userDocRef = doc(db, "users", userUID);
+
+          // 获取用户文档的快照
+          const userDocSnapshot = await getDoc(userDocRef);
+
+          // 如果用户文档存在，则更新收藏
+          if (userDocSnapshot.exists()) {
+            // 获取用户文档的数据
+            const userData = userDocSnapshot.data();
+
+            // 获取用户收藏的食谱数组，如果不存在，则创建一个新数组
+            const userFavorites = userData.favorites || [];
+
+            // 检查食谱是否已經在收藏夾中
+            const isRecipeAlreadyFavorited = userFavorites.some(
+              (favorite) => favorite.recipe_name === recipeName
+            );
+
+            if (isRecipeAlreadyFavorited) {
+              //alert("這個食譜已經在你的收藏夾中！");
+            } else {
+              // 在这里你可以根据 recipeName 查询 Firestore 中的食谱数据
+              // 然后将相应的食谱信息添加到 userFavorites 数组中
+              const recipeQuery = query(
+                collection(db, "Recipe"),
+                where("recipe_name", "==", recipeName)
+              );
+
+              const recipeSnapshot = await getDocs(recipeQuery);
+
+              recipeSnapshot.forEach((recipeDoc) => {
+                const recipeData = recipeDoc.data();
+                userFavorites.push({
+                  picture: recipeData.picture,
+                  recipe_name: recipeData.recipe_name,
+                });
+              });
+
+              // 更新用户文档中的 favorites 字段
+              await updateDoc(userDocRef, {
+                favorites: userFavorites,
+              });
+
+              Swal.fire({
+                imageUrl: "login.signup.jpg",
+                imageWidth: 225,
+                imageHeight: 120,
+                imageAlt: "咁單呷",
+                icon: "success",
+                text: "收藏成功！",
+              });
+            }
+          } else {
+            Swal.fire({
+                imageUrl: "login.signup.jpg",
+                imageWidth: 225,
+                imageHeight: 120,
+                imageAlt: "咁單呷",
+                icon: "error",
+                text: "帳號不存在，請确保已登入。",
+              });
+          }
+        } else {
+          Swal.fire({
+                imageUrl: "login.signup.jpg",
+                imageWidth: 225,
+                imageHeight: 120,
+                imageAlt: "咁單呷",
+                icon: "error",
+                text: "請登入後再進行收藏。",
+              });
+        }
+      }
+
+      // 从收藏夹中移除函数
+      async function removeFromFavorites(recipeName) {
+        // 获取用户 UID
+        const user = auth.currentUser;
+
+        if (user) {
+          const userUID = user.uid;
+
+          // 获取用户文档的引用
+          const userDocRef = doc(db, "users", userUID);
+
+          // 获取用户文档的快照
+          const userDocSnapshot = await getDoc(userDocRef);
+
+          // 如果用户文档存在，则更新收藏
+          if (userDocSnapshot.exists()) {
+            // 获取用户文档的数据
+            const userData = userDocSnapshot.data();
+
+            // 获取用户收藏的食谱数组
+            const userFavorites = userData.favorites || [];
+
+            // 找到要移除的食谱在收藏数组中的索引
+            const indexToRemove = userFavorites.findIndex(
+              (favorite) => favorite.recipe_name === recipeName
+            );
+
+            if (indexToRemove !== -1) {
+              // 移除指定索引的食谱
+              userFavorites.splice(indexToRemove, 1);
+
+              // 更新用户文档中的 favorites 字段
+              await updateDoc(userDocRef, {
+                favorites: userFavorites,
+              });
+
+              Swal.fire({
+                imageUrl: "login.signup.jpg",
+                imageWidth: 225,
+                imageHeight: 120,
+                imageAlt: "咁單呷",
+                icon: "success",
+                text: "已取消收藏！",
+              });
+            }
+          }
+        }
+      }
+
+      // 收藏
+
+      //查看詳情生成動態 HTML 內容
+      async function viewRecipeDetails(recipe_name) {
+        console.log("查看食譜詳細信息：", recipe_name);
+
+        // 使用 query 函數來查詢符合條件的文檔
+        const recipeQuerySnapshot = await getDocs(
+          query(
+            collection(db, "Recipe"),
+            where("recipe_name", "==", recipe_name)
+          )
+        );
+
+        // 如果有符合條件的文檔
+        if (!recipeQuerySnapshot.empty) {
+          // 獲取第一個符合條件的文檔
+          const doc = recipeQuerySnapshot.docs[0];
+          const recipeData = doc.data();
+
+          // 定義 videoUrl 變數
+          const videoId = getYouTubeVideoId(recipeData.video);
+          const videoUrl = `https://www.youtube.com/embed/${videoId}`;
+
+          function getYouTubeVideoId(url) {
+            const match = url.match(
+              /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
+            );
+            return match ? match[1] : null;
+          }
+
+          // 替換資料中的句號為換行符號
+          const cookingSteps = recipeData.step.split("。").join("。<br>");
+
+          // 生成動態 HTML 內容
+          const recipeDetailHTML =
+            `<!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <title>咁單呷</title>
+                        <!-- JQuery 連結 -->
+                        <scr` +
+            `ipt src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></scr` +
+            `ipt>
+                        <!-- JQuery UI 連結 -->
+                        <scr` +
+            `ipt src="function.js"></scr` +
+            `ipt>
+                        <meta charset="UTF-8" />
+
+                        <link
+                          rel="shortcut icon"
+                          href="https://www1.pu.edu.tw/~s1091829/logo"
+                          type="image/x-icon"
+                        />
+                        <!-- href="https://cdn-icons-png.flaticon.com/512/4443/4443003.png" -->
+                        <meta name="viewport" content="width=device-width, initial-scale=1" />
+                        <link
+                          rel="stylesheet"
+                          href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"
+                        />
+                        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+                        <scr` +
+            `ipt src="http://code.jquery.com/jquery-2.1.4.js"></scr` +
+            `ipt>
+                        <scr` +
+            `ipt src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></scr` +
+            `ipt>
+                        <link rel="stylesheet" href="style.css" />
+                        <style>
+                            .w3-bar-block .w3-bar-item {padding:20px}/*側邊欄Sidebar*/
+                            
+                            /*h3標題：精選食譜的食譜名、Footer的關於我們*/
+                            h3 {
+                                color : #2A4C65;   /*8E6E57 976666 17341E*/
+                                font-size: x-large;
+                                font-weight: 600;
+                                text-align: center;
+                            }
+                            
+                            h2{
+                                color: #003C9D;
+                                font-size: xx-large;
+                                font-weight: 600;
+                                text-align: center;
+                                margin-top: 50px;
+                            }
+
+                            .Rimg {
+                                border-radius: 10px;
+                                display: block; 
+                                margin: auto;
+                                width:30%;
+                                height:30%;
+                            }
+
+                            .Rshow {
+                                background-color: #b89886;
+                                border-radius: 10px;
+                                float: initial;
+                                width: 80%;
+                                height: auto;
+                                display: inline-table;
+                                vertical-align: middle;
+                                text-align: left;
+                            }
+
+                            .Riframe {
+                                width: auto;
+                                height: 100%;
+                                display: block;
+                                margin: 0 auto;
+                                background-color: #b89886;
+                                border-radius: 10px;
+                                text-align: left;
+                            }
+                            #overlay {
+                              display: none;
+                              position: fixed;
+                              top: 0;
+                              left: 0;
+                              width: 100%;
+                              height: 100%;
+                              background-color: rgba(0, 0, 0, 0.5);; /* Adjust the transparency as needed */
+                              z-index: 1;
+                            }
+
+                            /* Add this style to make the overlay clickable */
+                            #overlay:hover {
+                              cursor: pointer;
+                            }
+
+                            /* 回到頂部按鈕 */
+                            #backToTopBtn {
+                              position: fixed; /* 固定在視窗中的位置 */
+                              bottom: 20px;/* 與視窗底部的距離為20像素 */
+                              right: 10px;/* 與視窗右側的距離為20像素 */
+                              font-size: 20px;/* 文字大小為20像素 */
+                              padding: 10px;/* 內邊距為10像素，增加點擊區域 */
+                              background-color: rgba(0, 0, 0, 0.5); /* 這裡的0.5表示50%的不透明度*/
+                              color: #fff; /* 文字顏色為白色 */
+                              border: none; /* 按鈕無邊框 */
+                              border-radius: 5px;/* 圓角半徑為5像素 */
+                              cursor: pointer;/* 鼠標懸停時顯示為手型指示器 */
+                            }
+
+                            #backToTopBtn:hover {
+                              background-color: rgba(0, 0, 0, 0.4); /* 這裡的0.4表示40%的不透明度*/
+                            }
+                            /* 回到頂部按鈕 */
+
+                            /* 收藏按鈕 */
+                            #loveButton {
+                              background-color: transparent; /* 設置按鈕的背景色為透明 */
+                              border: none; /* 移除按鈕的邊框 */
+                              cursor: pointer; /* 設置光標為手型 */
+                              outline: none; /* 移除按鈕點擊時的外框效果 */
+                              width: 20%; /* 設置圖片寬度為按鈕的80% */
+                              height: 20%; /* 設置圖片高度為按鈕的80% */
+                            }
+
+                            #loveButton img {
+                              width: 20%; /* 設置圖片寬度為按鈕的80% */
+                              height: 20%; /* 設置圖片高度為按鈕的80% */
+                            }
+                            /* 收藏按鈕 */
+                        </style>
+                    </head>
+                        <body bgcolor="#AAB8AB">
+                          <!-- 背景顏色 --><!-- 82ABA3 95A098 AAB8AB 93A3A0-->
+
+                          <!-- Sidebar (hidden by default) -->
+                          <nav
+                            class="w3-sidebar w3-right w3-bar-block w3-card w3-top w3-xlarge w3-animate-right"
+                            style="display: none; z-index: 2; width: 20%; min-width: 300px; right: 0"
+                            id="mySidebar"
+                          >
+                            <a class="w3-bar-item w3-button" id="login-button">登入</a>
+                            <span id="user-info" style="display: none">
+                              <!--<hr color="black">-->
+                              <a id="user-show" style="display: none; list-style: none"></a>
+                              <a class="w3-bar-item w3-right"
+                                ><img
+                                  id="user-photo"
+                                  style="width: 40px; height: 40px; border-radius: 50%" /><b
+                                  id="user-name"
+                                ></b
+                              ></a>
+                              <a class="w3-bar-item w3-button w3-right" href="personal.html"
+                                >個人收藏</a
+                              >
+                              <a class="w3-bar-item w3-button w3-right" id="logout-button">登出</a>
+                            </span>
+                            <a
+                              href="javascript:void(0)"
+                              onclick="w3_close()"
+                              class="w3-bar-item w3-button w3-right"
+                              >關閉</a
+                            >
+                            <a href="index.html" class="w3-bar-item w3-button w3-right">首頁</a>
+                          </nav>
+
+                          <!-- 透明的背景 -->
+                          <div id="overlay" onclick="w3_close()"></div>
+
+                          <!-- Top menu -->
+                          <div class="w3-top w3-white w3-xlarge" style="margin: auto">
+                            <div class="w3-padding-16 w3-left">
+                              <a href="index.html"
+                                ><img
+                                  src="https://www1.pu.edu.tw/~s1091829/logo1"
+                                  width="160px"
+                                  height="40px"
+                              /></a>
+                            </div>
+
+                            <div class="w3-button w3-padding-16 w3-right" onclick="w3_open()">☰</div>
+                          </div>
+
+                            <!-- Recipe Section -->
+                            <div class="w3-container w3-padding-32 w3-center">
+                                  <!-- 回到頂部按鈕 -->
+                                  <button id="backToTopBtn" onclick="backToTop()">^</button>
+                                  <!-- 回到頂部按鈕 -->
+                                  <h2>${recipeData.recipe_name}</h2>
+
+                                  <img class="Rimg" src="${recipeData.picture}"></img>                                  
+
+                                <div class="w3-padding-32">
+                                    <p class="Rshow">
+                                    <br>
+                                    一、準備食材：<br>
+                                        ${recipeData.prepare_string}。 <br>
+                                        調味料：<br>
+                                        ${recipeData.seasoning_string}。 <br>
+                                        (以上食材可依人數或個人喜好自行調整)<br>
+                                    <br>
+                                    二、製作過程：<br>
+                                        ${cookingSteps} <br>
+                                    <iframe class="Riframe" src = "${videoUrl}"></iframe>
+                                    <br> <br>
+                                    
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Footer -->
+                            <footer class="w3-row-padding w3-padding-32">
+                            <br>
+                                <div class="w3-center">
+                                    <h3>關於我們</h3>
+                                    <div>
+                                    <span>本網頁僅供畢業專題使用</span><br>
+                                    <span
+                                        >參考網頁:<a href="https://www.w3schools.com/spaces" target="_blank"
+                                        >W3Schools Spaces</a
+                                        ></span>
+                                    </div>
+                                </div>
+                            </footer>
+
+                          <scr` +
+            `ipt>
+                              // Script to open and close sidebar
+                              function w3_open() {
+                                  document.getElementById("mySidebar").style.display = "block";
+                                  document.getElementById("overlay").style.display = "block";//(11/15)點擊透明背景/側邊導覽列以外的地方時，就觸發關閉側邊導覽列
+                              }
+                              
+                              function w3_close() {
+                                  document.getElementById("mySidebar").style.display = "none";
+                                  document.getElementById("overlay").style.display = "none";//(11/15)點擊透明背景/側邊導覽列以外的地方時，就觸發關閉側邊導覽列
+                              }
+
+                              // 回到頂部的函數
+                              function backToTop() {
+                                document.body.scrollTop = 0; // For Safari
+                                document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE, and Opera
+                              }
+
+                              // 監聽視窗滾動事件，顯示/隱藏回到頂部按鈕
+                              window.onscroll = function () {
+                                  scrollFunction();
+                              };
+
+                              function scrollFunction() {
+                                  var backToTopBtn = document.getElementById("backToTopBtn");
+
+                                // 添加點擊事件監聽器
+                                  backToTopBtn.addEventListener("click", backToTop);
+                              }
+
+                            </scr` +
+            `ipt>
+                            <scr` +
+            `ipt type="module">
+                            // Import the functions you need from the SDKs you need
+                            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
+                            import { getAuth , GoogleAuthProvider, signInWithPopup, getRedirectResult, signOut } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
+                            //import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-analytics.js";
+                            // TODO: Add SDKs for Firebase products that you want to use
+                            // https://firebase.google.com/docs/web/setup#available-libraries
+                            
+                            
+                            // Your web app's Firebase configuration
+                            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+                            const firebaseConfig = {
+                              apiKey: "AIzaSyCkYXHGj37nHrMglwUHKWN2vOE0ty3o8T4",
+                              authDomain: "fir-test-dc8dc.firebaseapp.com",
+                              projectId: "fir-test-dc8dc",
+                              storageBucket: "fir-test-dc8dc.appspot.com",
+                              //messagingSenderId: "851272507964",
+                              appId: "1:851272507964:web:493d6b2ce3d5e239029939"
+                            };
+
+                            // Initialize Firebase
+                            const app = initializeApp(firebaseConfig);
+                            const auth = getAuth(app);
+                            const provider = new GoogleAuthProvider(app);
+                            
+                            const loginButton = document.getElementById('login-button');
+                            const userInfo = document.getElementById('user-info');
+                            const logoutButton = document.getElementById('logout-button');
+
+                            loginButton.addEventListener("click", () => {
+                              // Use signInWithPopup instead of signInWithRedirect
+                              signInWithPopup(auth, provider)
+                                .then((result) => {
+                                  const user = result.user;
+                                  // Update the page with user information
+                                  loginButton.style.display = "none";
+                                  userInfo.style.display = "block";
+                                  document.getElementById("user-name").textContent = user.displayName;
+                                  document.getElementById("user-photo").src = user.photoURL;
+                                  document.getElementById("user-name-").textContent =
+                                    user.displayName; //(12/05)
+                                  document.getElementById("user-photo-").src = user.photoURL; //(12/05)
+
+                                  Swal.fire({
+                                    imageUrl: "login.signup.jpg",
+                                    imageWidth: 225,
+                                    imageHeight: 120,
+                                    imageAlt: "咁單呷",
+                                    icon: "success",
+                                    text: "登入成功！",
+                                  });
+                                })
+                                .catch((error) => {
+                                  console.error("Sign in error:", error);
+                                });
+                            });
+
+                            // Google Sign-Out
+                            logoutButton.addEventListener("click", () => {
+                              signOut(auth)
+                                .then(() => {
+                                  Swal.fire({//(11/28)
+                                    imageUrl: "login.signup.jpg",
+                                    imageWidth: 225,
+                                    imageHeight: 120,
+                                    imageAlt: "咁單呷",
+                                    icon: "success",
+                                    text: "登出成功！",
+                                  })
+
+                                  // Sign-out successful, update UI
+                                  loginButton.style.display = "block";
+                                  userInfo.style.display = "none";
+                                  document.getElementById("user-name").textContent = "";
+                                  document.getElementById("user-photo").src = "";
+                                })
+                                .catch((error) => {
+                                  console.error("Sign out error:", error);
+                                });
+                            });
+
+                            // (使用者訊息改變)On auth state change
+                            auth.onAuthStateChanged((user) => {
+                                if (user) {
+                                  // User is signed in
+
+                                  loginButton.style.display = 'none';
+                                  userInfo.style.display = 'block';
+                                  document.getElementById('user-name').textContent = user.displayName;
+                                  document.getElementById('user-photo').src = user.photoURL;
+                                  document.getElementById('user-name-').textContent = user.displayName;//(12/05)
+                                  document.getElementById('user-photo-').src = user.photoURL;//(12/05)
+                                } else {
+                                  // User is signed out
+                                  loginButton.style.display = 'block';
+                                  userInfo.style.display = 'none';
+                                }
+                            });
+
+                            // (連接使用者資料庫)On auth state change
+                            auth.onAuthStateChanged(async (user) => {
+                              if (user) {
+                                // User is signed in
+
+                                const userUID = user.uid;
+                                const userName = user.displayName;
+                                const userEmail = user.email;
+
+                                const userDocRef = doc(db, "users", userUID);
+
+                                // 检查用户文档是否存在
+                                const userDocSnapshot = await getDoc(userDocRef);
+                                if (!userDocSnapshot.exists()) {
+                                  // 如果用户文档不存在，则创建一个新文档
+                                  await setDoc(userDocRef, {
+                                    uid: userUID,
+                                    name: user.displayName,
+                                    Email: user.email,
+                                  });
+                                }
+
+
+                                loginButton.style.display = "none";
+                                userInfo.style.display = "block";
+                                document.getElementById("user-name").textContent = user.displayName;
+                                document.getElementById("user-photo").src = user.photoURL;
+                              } else {
+                                // User is signed out
+                                loginButton.style.display = "block";
+                                userInfo.style.display = "none";
+                              }
+                            });
+
+                            loveButton.addEventListener("click", function () {
+                                // 在这里添加处理点击收藏按钮的逻辑
+                                const isFavorite =
+                                  loveButton.parentElement.dataset.isFavorite === "true";
+
+                                if (isFavorite) {
+                                  // 执行取消收藏的逻辑
+                                  removeFromFavorites(data.recipe_name);
+                                  loveButton.parentElement.dataset.isFavorite = "false";
+                                  loveButton.innerHTML = "${recipeData.love}";
+                                } else {
+                                  // 执行收藏的逻辑
+                                  addToFavorites(data.recipe_name);
+                                  loveButton.parentElement.dataset.isFavorite = "true";
+                                  loveButton.innerHTML = "${recipeData.collected}";
+                                }
+                              });
+
+                              // 收藏
+                              // 添加到收藏夹的函数
+                              async function addToFavorites(recipeName) {
+                                // 获取用户 UID
+                                const user = auth.currentUser;
+
+                                if (user) {
+                                  const userUID = user.uid;
+
+                                  // 获取用户文档的引用
+                                  const userDocRef = doc(db, "users", userUID);
+
+                                  // 获取用户文档的快照
+                                  const userDocSnapshot = await getDoc(userDocRef);
+
+                                  // 如果用户文档存在，则更新收藏
+                                  if (userDocSnapshot.exists()) {
+                                    // 获取用户文档的数据
+                                    const userData = userDocSnapshot.data();
+
+                                    // 获取用户收藏的食谱数组，如果不存在，则创建一个新数组
+                                    const userFavorites = userData.favorites || [];
+
+                                    // 检查食谱是否已經在收藏夾中
+                                    const isRecipeAlreadyFavorited = userFavorites.some(
+                                      (favorite) => favorite.recipe_name === recipeName
+                                    );
+
+                                    if (isRecipeAlreadyFavorited) {
+                                      //alert("這個食譜已經在你的收藏夾中！");
+                                    } else {
+                                      // 在这里你可以根据 recipeName 查询 Firestore 中的食谱数据
+                                      // 然后将相应的食谱信息添加到 userFavorites 数组中
+                                      // 注意：这里需要你根据你的数据结构进行适当的修改
+                                      const recipeQuery = query(
+                                        collection(db, "Recipe"),
+                                        where("recipe_name", "==", recipeName)
+                                      );
+
+                                      const recipeSnapshot = await getDocs(recipeQuery);
+
+                                      recipeSnapshot.forEach((recipeDoc) => {
+                                        const recipeData = recipeDoc.data();
+                                        userFavorites.push({
+                                          picture: recipeData.picture,
+                                          recipe_name: recipeData.recipe_name,
+                                        });
+                                      });
+
+                                      // 更新用户文档中的 favorites 字段
+                                      await updateDoc(userDocRef, {
+                                        favorites: userFavorites,
+                                      });
+
+                                      alert("收藏成功！");
+                                    }
+                                  } else {
+                                    alert("帳號不存在，請确保已登入。");
+                                  }
+                                } else {
+                                  alert("請登入後再進行收藏。");
+                                }
+                              }
+
+                              // 从收藏夹中移除函数
+                              async function removeFromFavorites(recipeName) {
+                                // 获取用户 UID
+                                const user = auth.currentUser;
+
+                                if (user) {
+                                  const userUID = user.uid;
+
+                                  // 获取用户文档的引用
+                                  const userDocRef = doc(db, "users", userUID);
+
+                                  // 获取用户文档的快照
+                                  const userDocSnapshot = await getDoc(userDocRef);
+
+                                  // 如果用户文档存在，则更新收藏
+                                  if (userDocSnapshot.exists()) {
+                                    // 获取用户文档的数据
+                                    const userData = userDocSnapshot.data();
+
+                                    // 获取用户收藏的食谱数组
+                                    const userFavorites = userData.favorites || [];
+
+                                    // 找到要移除的食谱在收藏数组中的索引
+                                    const indexToRemove = userFavorites.findIndex(
+                                      (favorite) => favorite.recipe_name === recipeName
+                                    );
+
+                                    if (indexToRemove !== -1) {
+                                      // 移除指定索引的食谱
+                                      userFavorites.splice(indexToRemove, 1);
+
+                                      // 更新用户文档中的 favorites 字段
+                                      await updateDoc(userDocRef, {
+                                        favorites: userFavorites,
+                                      });
+
+                                      alert("取消收藏！");
+                                    }
+                                  }
+                                }
+                              }
+
+                          </scr` +
+            `ipt>
+                          
+
+                        </body>
+                    </html>`;
+
+          // 將動態生成的 HTML 內容載入新的網頁
+          openNewPageWithContent(recipeDetailHTML);
+        } else {
+          // 如果未找到符合條件的文檔
+          console.error("找不到食譜！", recipe_name);
+          alert("食譜詳細信息不可用。");
+        }
+      }
+
+      function openNewPageWithContent(htmlContent) {
+        // 創建一個新的網頁，並將動態生成的 HTML 內容插入其中
+        const newPage = window.open("", "_blank");
+        newPage.document.write(htmlContent);
+        newPage.document.close();
+      }
+
+      </script>
+    </div>
+
+    <!-- (11/20)回到頂部按鈕 -->
+    <button id="backToTopBtn" onclick="backToTop()">^</button>
+    <!-- (11/20)回到頂部按鈕 -->
+
+    <h2>食材查詢</h2>
+    <div id="t2-log"></div>
+    <div class="search-result">
+      <span class="highlight"></span>
+    </div>
+    <table id="myTable" border="1">
+      <thead>
+        <tr>
+          <th>圖片</th>
+          <th>名稱</th>
+          <th>準備食材</th>
+          <th>調味料</th>
+          <th>查看詳情</th>
+          <th>收藏</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <!-- Footer -->
+    <footer class="w3-row-padding w3-padding-32">
+      <hr />
+      <div class="w3-center">
+        <h3>關於我們</h3>
+        <div>
+          <span>本網頁僅供畢業專題使用</span><br />
+          <span
+            >參考網頁:<a href="https://www.w3schools.com/spaces" target="_blank"
+              >W3Schools Spaces</a
+            ></span
+          >
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

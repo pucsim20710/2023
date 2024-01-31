@@ -1,0 +1,1068 @@
+    .w3-bar-block .w3-bar-item {padding:20px}/*側邊欄Sidebar*/
+    
+    body,h5 {/*h4,h5目前沒找到用在哪裡*/
+      font-family: "Karma", sans-serif;
+      font-size: larger;
+    }
+    
+    /*h1標題：搜尋結果、蔬菜類、水果類、肉類、蛋類、菇類*/
+    /*h3標題：精選食譜的食譜名、Footer的關於我們*/
+    h1,h3 {
+      color : #2A4C65;   /*8E6E57 976666 17341E*/
+      font-size: x-large;
+      font-weight: 600;
+      text-align: center;
+    }
+    
+    /*h2標題：Search、Knowledge、當季蔬果、精選簡易食譜、Food*/
+    h2,caption {
+      color: #003C9D;
+      font-size: xx-large;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    /*在視覺上有所不同，擁有白色背景和藍色邊框，
+    以清晰地顯示當前選中或正在與之互動的狀態*/
+    input{border:0;
+      background-color:#B89886;/*82ABA3*/
+      color:#fff;
+      border-radius:10px;
+      cursor:pointer;}/*當滑鼠懸停在該元素上時，將滑鼠游標顯示為手型指針*/
+    input:focus{
+      color:#003C9D;
+      background-color:#fff;
+      border:2px #003C9D solid;
+    }
+
+    .show{/*食物分類*/
+      background-color:#B89886;
+      border-radius:10px;
+      text-align: left;
+    }
+    .show2{/*當季蔬果*/
+      background-color:#B89886;
+      border-radius:10px;
+      text-align: center;
+      display:inline-block;
+      flex: 1 1 100px; /* 设置项目的弹性增长、弹性收缩和初始大小 */
+      max-width: 200px; /* 设置项目的最大宽度 */
+      margin: 3px;
+    }
+    .container{/*當季蔬果*/
+      display: flex,70%;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    /*搜尋跟logo照片*/
+    #searchimg{
+      width:50px;
+      height:50px;
+    }
+    #logo1img{
+      width:160px;
+      height:40px;
+    }
+    
+/*精選食譜css*/
+    /*精選簡易食譜的內容*/
+    h6{
+      text-align: left;
+      font-weight: bold;
+    }
+    p {
+      color:black;
+      font-size: larger;
+      font-weight: 600;
+    }
+    /*精選簡易食譜的內容*/
+
+    /* 簡易食譜水平滚动容器样式 */
+    .horizontal-scroll-container {
+      display: flex; /* 使用 Flexbox 布局 */
+      overflow-x: auto; /* 启用水平滚动条 */
+      -webkit-overflow-scrolling: touch; /* 支持iOS滑动效果 */
+      position: relative;
+      /*overflow: hidden;*/
+      width: 80%;
+      margin: 0 auto;
+    }
+
+    .slider {
+      display: flex;
+      transition: transform 0.3s ease-in-out;
+      width: 600px; 
+      height: 900px;
+    }
+
+    /* 滚动项样式 */
+    .scroll-item {
+      flex: 30%;
+      margin-right: 20px; /* 可根据需要调整项之间的间距 */
+      display: flex;
+      flex-direction: column;
+      background-color: #B89886;
+      text-align: center;
+      border: 1px solid #ccc;
+      align-items: center; /* 内容在水平方向上居中对齐 */
+      padding: 20px;
+    }
+
+    .scroll-item img {
+      width: 300px; 
+      height: 200px; 
+    }
+
+    /* 左右按钮样式 */
+    .prev-button,
+    .next-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: transparent; /* 设置背景为透明 */
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      outline: none;
+      transition: background-color 0.3s; /* 添加背景色渐变效果 */
+      font-size: 30px; /* 调整箭头的大小 */
+    }
+
+    .prev-button:hover,
+    .next-button:hover {
+      background-color: white; /* 鼠标悬停时的背景颜色，您可以根据需要调整颜色 */
+      color: black; /* 鼠标悬停时的文本颜色，您可以根据需要调整颜色 */
+    }
+        
+    .prev-button {
+      left: 0;
+    }
+
+    .next-button {
+      right: 0;
+    }
+
+    /* 文字样式 */
+    .stext {
+      flex: 1; /* 填充可用空间 */
+      overflow: auto; /* 添加垂直滚动条 */
+      text-align: left; /* 将文本内容左对齐 */
+    }
+
+    /* iframe 样式 */
+    iframe {
+      width: 400px; 
+      height: 200px;
+      border: none; /* 移除边框 */
+    } 
+/*精選食譜css*/
+
+    .group{/*當季蔬果及食物分類*/
+      width: 95%;
+      display: inline-block;
+      margin: auto;
+    }
+
+    /*導航到食譜的網頁，並且按鈕上標有 "相關料理" 的文字。
+    這個按鈕會在網頁上用於連接到相關的料理資訊或頁面。
+    */
+    .recipe{
+      width:150px;height:50px;/*(12/06)相關料理按鈕大小*/
+      padding: 2px;
+      color:#2A4C65;
+      background-color:#fff;
+      border:2px #003C9D solid;
+      text-decoration:underline;/*(12/05)相關料理加底線*/
+    }
+
+    /*輸入搜尋的框框*/
+    /*(12/04)*/
+    #search-container{display: inline;}
+    #search-input-recipe,
+    #search-input {
+      background-color: #fff;
+      border: black;
+      display: inline-block; /* (使用Flexbox布局) */
+      align-items: center; /* 垂直居中對齊 */
+      justify-content: center; /* 水平居中對齊 */
+      height: 35px;
+      width: 300px; /* 設定寬度，可以根據需要調整 */
+    }/*(12/04)*/
+
+    #search-input,
+    #search-input-recipe,
+    #search-button {
+      margin-right: 2px;  /*右邊距，可以根據需要調整 */
+      
+    }
+    #search-input::placeholder{color:gray;}/*(12/05)*/
+    /*輸入搜尋的框框*/
+
+    /* 食材搜尋表格 */
+    #myTable{/*表格的樣式*/
+      width: 95%; /* (11/20)设置表格宽度 */
+      border: 1px solid;
+      border-radius: 5px;
+      font-size:20px;/*字體大小*/
+      text-align: center;
+      margin: 0 auto; /* 居中显示表格 */
+      display: none;/*初始时隐藏表格*/
+    }
+
+    #myTable th{/*表頭*/
+      background-color: #B89886;
+      border-radius: 10px;
+      text-align: center;/*(11/20)*/
+    }
+      
+    #myTable td{/*表格中的所有数据单元格 */
+      padding: 5px; /* 设置单元格内边距 */
+      /*width: 20%;  设置单元格宽度 */
+    }
+
+/*(11/20)*/
+    #myTable td:nth-child(1) {
+      /* 设置第一列的宽度为20% */
+      width: 5%;
+    }
+
+    #myTable td:nth-child(2) {
+      /* 设置第二列的宽度为30% */
+      width: 5%;
+    }
+
+    #myTable td:nth-child(3) {
+      /* 设置第二列的宽度为30% */
+      width: 5%;
+    }
+
+    #myTable td:nth-child(4) {
+      /* 设置第二列的宽度为30% */
+      width: 5%;
+    }
+
+    #myTable td:nth-child(5) {/*(11/22)*/
+      /* 设置第二列的宽度为30% */
+      width: 3%;
+    }
+
+    #myTable td:nth-child(6) {/*(11/22)*/
+      /* 设置第二列的宽度为30% */
+      width: 2%;
+    }
+/*(11/20)*/      
+
+/*(11/20)*/
+    #myTable td img {
+      width: auto; /* 让图片按比例自适应宽度 */
+      height: auto; /* 让图片按比例自适应高度 */
+      max-width: 100%; /* 设置图片最大宽度为100% */
+      max-height: 100%; /* 设置图片最大高度为100% */
+      margin: 0 auto; /* 让图片水平居中 */
+      vertical-align: middle; /* 让图片垂直居中 */
+      /*display: block;  设置图像为块级元素，以使 margin: 0 auto; 生效 */
+    }
+/*(11/20)*/
+
+    #myTable tr:hover{/*鼠标悬停时改变数据行的背景颜色*/
+      background-color:#fff;
+    }
+      
+    #t2-log {
+      color : #2A4C65;   /*8E6E57 976666 17341E*/
+      font-size: x-large;
+      font-weight: 600;
+      text-align: center;
+    }    
+
+    li{
+      font-weight: bolder;
+      background-color: #B89886;
+    } 
+/* 搜尋結果的CSS */
+/* 食材搜尋表格^ */
+
+/* 食譜搜尋表格ˇ */
+#allrecipeTable{/*表格的樣式*/
+      width: 95%; /* (11/20)设置表格宽度 */
+      border: 1px solid;
+      border-radius: 5px;
+      font-size:20px;/*字體大小*/
+      text-align: center;
+      margin: 0 auto; /* 居中显示表格 */
+    }
+
+    #allrecipeTable th{/*表頭*/
+      background-color: #B89886;
+      border-radius: 10px;
+      text-align: center;/*(11/20)*/
+    }
+      
+    #allrecipeTable td{/*表格中的所有数据单元格 */
+      padding: 5px; /* 设置单元格内边距 */
+      /*width: 20%;  设置单元格宽度 */
+    }
+
+    #allrecipeTable td:nth-child(1) {
+      /* 设置第一列的宽度为20% */
+      width: 5%;
+    }
+
+    #allrecipeTable td:nth-child(2) {
+      /* 设置第二列的宽度为30% */
+      width: 5%;
+    }
+
+    #allrecipeTable td:nth-child(3) {
+      /* 设置第二列的宽度为30% */
+      width: 5%;
+    }
+
+    #allrecipeTable td:nth-child(4) {
+      /* 设置第二列的宽度为30% */
+      width: 5%;
+    }
+
+    #allrecipeTable td:nth-child(5) {/*(11/22)*/
+      /* 设置第二列的宽度为30% */
+      width: 3%;
+    }
+
+    #allrecipeTable td:nth-child(6) {/*(11/22)*/
+      /* 设置第二列的宽度为30% */
+      width: 2%;
+    }
+
+    #allrecipeTable td img {
+      width: auto; /* 让图片按比例自适应宽度 */
+      height: auto; /* 让图片按比例自适应高度 */
+      max-width: 100%; /* 设置图片最大宽度为100% */
+      max-height: 100%; /* 设置图片最大高度为100% */
+      margin: 0 auto; /* 让图片水平居中 */
+      vertical-align: middle; /* 让图片垂直居中 */
+      /*display: block;  设置图像为块级元素，以使 margin: 0 auto; 生效 */
+    }
+
+    #allrecipeTable tr:hover{/*鼠标悬停时改变数据行的背景颜色*/
+      background-color:#fff;
+    }
+/* 食譜搜尋表格^ */
+
+/* 個人收藏表格ˇ */
+    #PTable{/*表格的樣式*/
+      width: 95%; /* (11/20)设置表格宽度 */
+      border: 1px solid;
+      border-radius: 5px;
+      font-size:20px;/*字體大小*/
+      text-align: center;
+      margin: 0 auto; /* 居中显示表格 */
+      /*display: none;/*初始时隐藏表格*/
+    }
+
+    #PTable th{/*表頭*/
+      background-color: #B89886;
+      border-radius: 10px;
+      text-align: center;/*(11/20)*/
+    }
+      
+    #PTable td{/*表格中的所有数据单元格 */
+      padding: 5px; /* 设置单元格内边距 */
+      /*width: 20%;  设置单元格宽度 */
+    }
+
+/*(11/20)*/
+    #PTable td:nth-child(1) {
+      /* 设置第一列的宽度为20% */
+      width: 5%;
+    }
+
+    #PTable td:nth-child(2) {
+      /* 设置第二列的宽度为30% */
+      width: 5%;
+    }
+
+    #PTable td:nth-child(3) {/*(11/22)*/
+      /* 设置第二列的宽度为30% */
+      width: 5%;
+    }
+
+    #PTable td:nth-child(4) {/*(11/22)*/
+      /* 设置第二列的宽度为30% */
+      width: 5%;
+    }
+/*(11/20)*/      
+
+/*(11/20)*/
+    #PTable td img {
+      width: auto; /* 让图片按比例自适应宽度 */
+      height: auto; /* 让图片按比例自适应高度 */
+      max-width: 100%; /* 设置图片最大宽度为100% */
+      max-height: 100%; /* 设置图片最大高度为100% */
+      margin: 0 auto; /* 让图片水平居中 */
+      vertical-align: middle; /* 让图片垂直居中 */
+      /*display: block;  设置图像为块级元素，以使 margin: 0 auto; 生效 */
+    }
+/*(11/20)*/
+
+    #PTable tr:hover{/*鼠标悬停时改变数据行的背景颜色*/
+      background-color:#fff;
+    }
+/* 個人收藏表格^ */
+
+/*小知識(10/25)*/
+
+  /* 通用按钮样式 */
+  .knowledge-button {
+    margin: 10px auto; /* 设置按钮的左右外边距为 auto，使其水平居中，并增加上下外边距以实现垂直排列和间距 */
+    text-align: center; /* 文本水平居中对齐 */
+    padding: 10px; /* 添加一些内边距 */
+    width: 120px; /* 设置按钮的宽度，根据需要进行调整 */
+    background-color: #B89886; /* 设置按钮背景颜色 */
+    color: black; /* 设置按钮文字颜色 */
+    border: none; /* 移除按钮边框 */
+    border-radius: 5px; /* 添加边框圆角 */
+    cursor: pointer; /* 鼠标悬停时显示指针光标 */ 
+    font-size: 20px; /* (11/20)设置按钮字体大小，根据需要进行调整 */
+  }
+
+  .knowledge-button.active {
+    background-color: #fff; /* 设置按下按钮时的背景颜色 */
+    color: black; /* 设置按下按钮时的文字颜色 */
+  }
+
+  #knowledgeTable1{/*表格的樣式*/
+      width: 100%; /* (11/20)设置表格宽度 */
+      border: 1px solid;
+      border-radius: 5px;
+      font-size:20px;/*字體大小*/
+      text-align: left;
+      margin: 0 auto; /* 居中显示表格 */
+      display: none;/*初始时隐藏表格*/
+  }
+
+  #knowledgeTable1 th{/*表頭*/
+    background-color: #B89886;
+    border-radius: 10px;
+    text-align: center;
+  }
+    
+  #knowledgeTable1 td{/*表格中的所有数据单元格 */
+    padding: 5px; /* (11/20)设置单元格内边距 */
+  }
+
+/*(11/20)*/
+  #knowledgeTable1 td:nth-child(1) {
+    /* 设置第一列的宽度为20% */
+    width: 1%;
+    text-align: center;
+  }
+
+  #knowledgeTable1 td:nth-child(2) {
+    width: 10%;
+  }
+
+  #knowledgeTable1 td:nth-child(3) {
+    width: 20%;
+  }
+ 
+  #knowledgeTable1 td img {
+    width: auto; /* 让图片按比例自适应宽度 */
+    height: auto; /* 让图片按比例自适应高度 */
+    max-width: 100%; /* 设置图片最大宽度为100% */
+    max-height: 100%; /* 设置图片最大高度为100% */
+    margin: 0 auto; /* 让图片水平居中 */
+    /*vertical-align: middle;  让图片垂直居中 */
+    display: block; /* 设置图像为块级元素，以使 margin: 0 auto; 生效 */
+  }
+/*(11/20)*/   
+
+  #knowledgeTable1 tr:hover{/*鼠标悬停时改变数据行的背景颜色*/
+    background-color:#fff;
+  }
+
+  #knowledgeTable2{/*表格的樣式*/
+      width: 100%; /* (11/20)设置表格宽度 */
+      border: 1px solid;
+      border-radius: 5px;
+      font-size:20px;/*字體大小*/
+      text-align: left;
+      margin: 0 auto; /* 居中显示表格 */
+      display: none;/*初始时隐藏表格*/
+  }
+
+  #knowledgeTable2 th{/*表頭*/
+    background-color: #B89886;
+    border-radius: 10px;
+    text-align: center;
+  }
+    
+  #knowledgeTable2 td{/*表格中的所有数据单元格 */
+    padding: 5px; /* (11/20)设置单元格内边距 */
+  }
+
+/*(11/20)*/
+  #knowledgeTable2 td:nth-child(1) {
+    width: 1%;
+    text-align: center;
+  }
+
+  #knowledgeTable2 td:nth-child(2) {
+    width: 10%;
+  }
+
+  #knowledgeTable2 td:nth-child(3) {
+    width: 20%;
+  }
+
+  #knowledgeTable2 td img {
+        width: auto; /* 让图片按比例自适应宽度 */
+        height: auto; /* 让图片按比例自适应高度 */
+        max-width: 100%; /* 设置图片最大宽度为100% */
+        max-height: 100%; /* 设置图片最大高度为100% */
+        margin: 0 auto; /* 让图片水平居中 */
+        vertical-align: middle; /* 让图片垂直居中 */
+        /*display: block;  设置图像为块级元素，以使 margin: 0 auto; 生效 */
+  }
+/*(11/20)*/
+
+  #knowledgeTable2 tr:hover{/*鼠标悬停时改变数据行的背景颜色*/
+    background-color:#fff;
+  }
+
+  #knowledgeTable3{/*表格的樣式*/
+      width: 100%; /* (11/20)设置表格宽度 */
+      border: 1px solid;
+      border-radius: 5px;
+      font-size:20px;/*字體大小*/
+      text-align: left;
+      margin: 0 auto; /* 居中显示表格 */
+      display: none;/*初始时隐藏表格*/
+  }
+
+  #knowledgeTable3 th{/*表頭*/
+    background-color: #B89886;
+    border-radius: 10px;
+    text-align: center;
+  }
+    
+  #knowledgeTable3 td{/*表格中的所有数据单元格 */
+    padding: 5px; /* (11/20)设置单元格内边距 */
+  }
+
+/*(11/20)*/
+  #knowledgeTable3 td:nth-child(1) {
+    /* 设置第一列的宽度为20% */
+    width: 2%;
+    text-align: center;
+  }
+
+  #knowledgeTable3 td:nth-child(2) {
+    width: 10%;
+  }
+
+  #knowledgeTable3 td:nth-child(3) {
+    width: 20%;
+  }
+
+  #knowledgeTable3 td img {
+        width: auto; /* 让图片按比例自适应宽度 */
+        height: auto; /* 让图片按比例自适应高度 */
+        max-width: 100%; /* 设置图片最大宽度为100% */
+        max-height: 100%; /* 设置图片最大高度为100% */
+        margin: 0 auto; /* 让图片水平居中 */
+        vertical-align: middle; /* 让图片垂直居中 */
+        /*display: block;  设置图像为块级元素，以使 margin: 0 auto; 生效 */
+  }
+/*(11/20)*/
+
+  #knowledgeTable3 tr:hover{/*鼠标悬停时改变数据行的背景颜色*/
+    background-color:#fff;
+  }
+
+  #knowledgeTable4{/*表格的樣式*/
+      width: 100%; /* (11/20)设置表格宽度 */
+      border: 1px solid;
+      border-radius: 5px;
+      font-size:20px;/*字體大小*/
+      text-align: left;
+      margin: 0 auto; /* 居中显示表格 */
+      display: none;/*初始时隐藏表格*/  }
+
+  #knowledgeTable4 th{/*表頭*/
+    background-color: #B89886;
+    border-radius: 10px;
+    text-align: center;
+  }
+    
+  #knowledgeTable4 td{/*表格中的所有数据单元格 */
+    padding: 5px; /* (11/20)设置单元格内边距 */
+  }
+
+/*(11/20)*/  
+  #knowledgeTable4 td:nth-child(1) {
+    /* 设置第一列的宽度为20% */
+    width: 2%;
+    text-align: center;
+  }
+
+  #knowledgeTable4 td:nth-child(2) {
+    width: 10%;
+  }
+
+  #knowledgeTable4 td:nth-child(3) {
+    width: 20%;
+  }
+
+  #knowledgeTable4 td img {
+        width: auto; /* 让图片按比例自适应宽度 */
+        height: auto; /* 让图片按比例自适应高度 */
+        max-width: 100%; /* 设置图片最大宽度为100% */
+        max-height: 100%; /* 设置图片最大高度为100% */
+        margin: 0 auto; /* 让图片水平居中 */
+        vertical-align: middle; /* 让图片垂直居中 */
+        /*display: block;  设置图像为块级元素，以使 margin: 0 auto; 生效 */
+  }
+/*(11/20)*/    
+
+  #knowledgeTable4 tr:hover{/*鼠标悬停时改变数据行的背景颜色*/
+    background-color:#fff;
+  }
+
+  li{
+    font-weight: bolder;
+    background-color: #B89886;
+  }
+/*小知識水平排列css start（12/06）*/
+  .horizontal-scroll-container1 {
+    display: flex; /* 使用 Flexbox 布局 */
+    overflow-x: auto; /* 启用水平滚动条 */
+    -webkit-overflow-scrolling: touch; /* 支持iOS滑动效果 */
+    /*position: relative;
+    overflow: hidden;*/
+    
+    scroll-snap-type: x mandatory; /* 水平滑動效果 */
+    width: 95%;
+    margin: 0 auto;
+  }
+
+  /* Hide the images by default */
+  .slider1 {/*(11/30)*/
+    flex-shrink: 0;
+    scroll-snap-align: start; /* 滑動到元素的開頭位置 */
+    overflow-x: auto; /* 启用水平滚动条 */
+    box-sizing: border-box; /* 確保 padding 不會增加元素的寬度 */
+    width: 25%; 
+    
+  }
+
+  .scroll-item1 {/*(11/30)*/
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: #B89886;
+    text-align: center;
+    border: 1px solid #ccc;
+    align-items: center;
+    padding: 8px;
+    box-sizing: border-box; /* 確保 padding 不會增加元素的寬度 */
+    height: 570px;
+  }
+  .scroll-item1 img {/*(11/30)*/
+    width: 250px; 
+    height: 200px; 
+  }
+
+  /* Caption text */
+  .text1 {/*(11/30)*/
+    background-color: #B89886;
+    color: black;
+    font-size:larger;
+    flex: 1; /* 填充可用空间 */
+    overflow: auto; /* 添加垂直滚动条 */
+  }
+/*小知識水平排列css start（12/06）*/
+/*小知識(10/25)*/
+
+/*小知識輪播css start*/
+    * {box-sizing:border-box}
+
+    /* Slideshow container */
+    .slideshow-container {
+      max-width: 600px; /* (11/21)或者使用像素值如 max-width: 700px; */
+      height: 600px; /* (11/22)固定高度 */
+      position: relative;
+      margin: auto;
+    }
+
+    /* Hide the images by default */
+    .mySlides {
+      display: none;
+    }
+
+    /*(11/22)*/
+    /* Add this style to set the width and height of the content container */
+    .slide-content {
+      max-width: 100%; /* Adjust the maximum width as needed */
+      max-height: 600px;
+      height: auto;
+      position: relative;
+    }
+
+    /* Add this style to ensure the image maintains its original aspect ratio */
+    .slide-content img {
+      width: 100%;
+      height: auto;
+    }
+
+    /* Add this style to set the width of the container based on screen width */
+    @media screen and (max-width: 600px) {
+      .slideshow-container {
+        max-width: 100%; /* Adjust the maximum width for smaller screens */
+        max-height: 100%;
+      }
+    }
+    /*(11/22)*/
+
+    /* Next & previous buttons */
+    .prev, .next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      width: auto;
+      margin-top: -22px;
+      padding: 16px;
+      color: white;
+      font-weight: bold;
+      font-size: 18px;
+      transition: 0.6s ease;
+      border-radius: 0 3px 3px 0;
+      user-select: none;
+    }
+
+    /* Position the "next button" to the right */
+    .next {
+      right: 0;
+      border-radius: 3px 0 0 3px;
+    }
+
+    /* On hover, add a black background color with a little bit see-through */
+    .prev:hover, .next:hover {
+      background-color: rgba(0,0,0,0.8);
+    }
+
+    /* Caption text */
+    .text {
+      background-color: #B89886;
+      opacity: 90%;
+      color: black;
+      font-size:x-large;
+      font-weight: bolder;
+      padding: 8px 12px;
+      position: relative;
+      top: 8px;
+      width: 100%; /* (11/21)設定文字容器的寬度，可以根據需要調整百分比 */
+      margin: 0 auto; /* (11/21)將文字置中 */
+      text-align: center;
+    }
+
+    /* Number text (1/3 etc) */
+    .numbertext {
+      color: black;
+      font-size: 12px;
+      padding: 8px 12px;
+      position: absolute;
+      top: 0;
+    }
+
+    /* The dots/bullets/indicators */
+    .dot {
+      cursor: pointer;
+      height: 15px;
+      width: 15px;
+      margin: 0 2px;
+      background-color: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      transition: background-color 0.6s ease;
+    }
+
+    .active, .dot:hover {
+      background-color: #717171;
+    }
+
+    /* Fading animation */
+    .fade {
+      animation-name: fade;
+      animation-duration: 1.5s;
+    }
+
+    @keyframes fade {
+      from {opacity: .4}
+      to {opacity: 1}
+    }
+/*小知識輪播css end*/
+
+/*(10/24)保存方式查看更多*/
+    #more{
+      cursor: pointer;/*(11/15)*/
+      color:#2A4C65;
+      background-color:#B89886;
+      border:2px #003C9D solid;
+    }
+/*(10/24)保存方式查看更多*/
+
+/* (10/27)查看更多的按鈕 */
+    .read-more-button {
+      background: #B89886; /* 设置背景颜色以增加文本的可读性 */
+      /*color: #fff;  文本颜色 */
+      /*font-size: 24px;  文本大小 */
+      padding: 20px; /* 调整内边距 */
+      border: none; /* 移除按钮边框 */
+      cursor: pointer; /* 添加指针样式 */
+      border-radius: 5px; /* 圆角边框 */
+      display: inline-block; /* 使按钮在一行内显示 */
+      text-decoration: none; /*(12/05)*/
+    }
+/* (10/27) */
+
+/*食物分類按鈕(10/24) . 當季蔬果按鈕(11/06)*/
+    /*增加當季蔬果按鈕(11/06)*/
+    .season_btn{
+      width: 115px;
+      display:inline-block;
+      background-color: #B89886;
+      height: 50px;
+      border-radius: 10px;
+    }
+    /*增加當季蔬果內容(11/06)*/
+    .btn{
+      width: 110px;
+      display:inline-block;
+      background-color: #B89886;
+      height: 50px;
+      border-radius: 10px;
+      border: 1px,black;        
+    }
+    .content,.season_content{/*增加當季蔬果_season_content(11/06)*/
+      background-color: #AAB8AB;
+      display: none;
+    }
+    .btn.active{
+      background-color: #fff;
+    }
+
+    /*增加當季蔬果點擊效果(11/06)*/
+    .season_btn.active{
+      background-color: #fff;
+      border:2px #003C9D solid;
+    }
+    /*增加當季蔬果點擊效果(11/06)*/
+
+    .content.show, .season_content.show{/*增加當季蔬果_season_content.show(11/06)*/
+      display:block;
+      background-color: none;
+      text-align: center;
+    }
+/*食物分類按鈕(10/24) . 當季蔬果按鈕(11/06)*/
+
+
+/* 食譜列的表格樣式 */
+    #RTable {/* 表格整体样式 */
+      width: 95%; /* (11/20)设置表格宽度 */
+      border: 1px solid;
+      border-radius: 5px;
+      font-size: 20px; /*字體大小*/
+      text-align: center;
+      margin: 0 auto; /* 居中显示表格 */
+    }
+
+    #RTable th {/* 表格标题样式 */
+      background-color: #b89886; /* 表头背景颜色 */
+      border-radius: 10px; /* 表头边框圆角 */
+      text-align: center; /* 表头文字居中 */
+    }
+
+    #RTable td {/*表格中的所有数据单元格 */
+      padding: 5px; /* (11/20)设置单元格内边距 */
+    }
+
+/*(11/20)*/
+    #RTable td:nth-child(1) {
+      width: 5%;
+    }
+
+    #RTable td:nth-child(2) {
+      width: 5%;
+    }
+
+    #RTable td:nth-child(3) {
+      width: 5%;
+    }
+
+    #RTable td:nth-child(4) {
+      width: 5%;
+    }
+
+    #RTable td:nth-child(5) {/*(11/22)*/
+      width: 3%;
+    }
+
+    #RTable td:nth-child(6) {/*(11/22)*/
+      width: 2%;
+    }
+
+    #RTable td img {
+          width: auto; /* 让图片按比例自适应宽度 */
+          height: auto; /* 让图片按比例自适应高度 */
+          max-width: 100%; /* 设置图片最大宽度为100% */
+          max-height: 100%; /* 设置图片最大高度为100% */
+          margin: 0 auto; /* 让图片水平居中 */
+          vertical-align: middle; /* 让图片垂直居中 */
+          /*display: block;  设置图像为块级元素，以使 margin: 0 auto; 生效 */
+    }
+/*(11/20)*/
+
+    #RTable tr:hover {/* 设置鼠标悬停时的背景颜色 */
+      background-color: #fff; 
+    }
+/* 食譜列的表格樣式 */
+
+/* 詳細食譜頁面的CSS */
+    .Rimg {
+      border-radius: 10px;
+      display: block; 
+      margin: auto;
+      width:400px;
+      height:300px;
+    }
+    .Rshow {
+      background-color: #b89886;
+      border-radius: 10px;
+      float: initial;
+      width: 60%;
+      display: inline-table;
+      vertical-align: middle;
+      text-align: left;
+    }
+    .Riframe {
+      width:400;
+      height:200;
+      display: block;
+      margin: 0 auto;
+      background-color: #b89886;
+      border-radius: 10px;
+      text-align: left;
+    }
+/* 詳細食譜頁面的CSS */
+
+/* (11/15)側邊導覽列外部添加一個透明的背景 */
+    /* Add this style to create a transparent overlay */
+    #overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);; /* Adjust the transparency as needed */
+      z-index: 1;
+    }
+
+    /* Add this style to make the overlay clickable */
+    #overlay:hover {
+      cursor: pointer;
+    }
+/* (11/15)側邊導覽列外部添加一個透明的背景 */
+
+/* (11/20) */
+    /* 回到頂部按鈕 */
+    #backToTopBtn {
+      position: fixed; /* 固定在視窗中的位置 */
+      bottom: 20px;/* 與視窗底部的距離為20像素 */
+      right: 10px;/* 與視窗右側的距離為20像素 */
+      font-size: 20px;/* 文字大小為20像素 */
+      padding: 10px;/* 內邊距為10像素，增加點擊區域 */
+      background-color: rgba(0, 0, 0, 0.5); /* 這裡的0.5表示50%的不透明度*/
+      color: #fff; /* 文字顏色為白色 */
+      border: none; /* 按鈕無邊框 */
+      border-radius: 5px;/* 圓角半徑為5像素 */
+      cursor: pointer;/* 鼠標懸停時顯示為手型指示器 */
+    }
+
+    #backToTopBtn:hover {
+      background-color: rgba(0, 0, 0, 0.4); /* 這裡的0.4表示40%的不透明度*/
+    }
+    /* 回到頂部按鈕 */
+/* (11/20) */
+
+/* (11/20)手機響應式畫面調整 */
+    @media only screen and (max-width: 767px) {
+      .horizontal-scroll-container {
+        width: 100%; /* 在较小屏幕上占据整个宽度 */
+      }
+
+      .slider {
+        width: 100%; /* 在较小屏幕上占据整个宽度 */
+      }
+
+      .scroll-item {
+        flex: 100%; /* 在较小屏幕上占据整个宽度 */
+        margin-right: 0; /* 去除间距 */
+      }
+      /*(12/06)*/
+      .horizontal-scroll-container1 {
+        overflow-x: auto; /* 小屏幕時改為水平滑動 */
+        flex-direction: row; /* 小屏幕上改為水平排列 */
+      
+      }
+      .scroll-item1 img {
+        width: 300px;
+        height: 250px; 
+      }
+      .slider1 {
+        width: 100%; /* 讓 slider1 寬度自動調整 */
+      }/*(12/06)*/
+    }
+/* (11/20)手機響應式畫面調整 */    
+
+/*(11/21)使用者顯示背景*/
+    ul{
+      background-color: none;
+      padding-left: 0;
+    }
+    ul .whitecolor{
+      background-color: white;
+      padding-left: 0;
+    }
+    .w3{ 
+      width: 120px;
+      text-align: left;
+    }
+/*(11/21)使用者顯示背景*/
+
+/*(11/22)*/
+/* 收藏按鈕 */
+    .love-button {
+      background-color: transparent; /* 設置按鈕的背景色為透明 */
+      border: none; /* 移除按鈕的邊框 */
+      cursor: pointer; /* 設置光標為手型 */
+      outline: none; /* 移除按鈕點擊時的外框效果 */
+      width: 100%; /* 設置圖片寬度為按鈕的80% */
+      height: 100%; /* 設置圖片高度為按鈕的80% */
+    }
+
+    .love-button img {
+      width: 500%; /* 設置圖片寬度為按鈕的80% */
+      height: 500%; /* 設置圖片高度為按鈕的80% */
+    }
+/* 收藏按鈕 */
+/*(11/22)*/
+
+/* 關鍵字標記 */
+      /*(11/15)*/
+      .highlight {
+        background-color: yellow; /* 背景色可以根据需要调整 */
+        font-weight: bold; /* 加粗可以根据需要调整 */
+      } /*(11/15)*/
